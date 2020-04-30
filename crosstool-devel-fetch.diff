@@ -1,0 +1,22 @@
+diff --git a/scripts/functions b/scripts/functions
+index 17384476..4000e4df 100644
+--- a/scripts/functions
++++ b/scripts/functions
+@@ -1830,7 +1830,7 @@ CT_GetVersion_git()
+         CT_Abort "${pkg_name}: cannot specify both branch and changeset for Git"
+     fi
+ 
+-    devel_branch="${devel_branch:-master}"
++    devel_branch="${devel_branch:-fetchgit}"
+     git_shallow_branch="${devel_branch}"
+     if [ -z "${devel_revision}" ]; then
+         local matches=`git ls-remote --exit-code "${devel_url}" --refs "${devel_branch}" \
+@@ -1986,7 +1986,7 @@ CT_DoFetch()
+             return 0
+         fi
+ 
+-        if [ "${CT_FORBID_DOWNLOAD}" = "y" ]; then
++        if [[ "${devel_url}" != file://* && "${CT_FORBID_DOWNLOAD}" == "y" ]]; then
+             CT_DoLog WARN "Downloads forbidden, not trying ${devel_vcs} retrieval"
+             return 1
+         fi
